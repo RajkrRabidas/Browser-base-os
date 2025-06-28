@@ -66,6 +66,30 @@ function makeDraggable() {
   });
 }
 
+// Make a single window draggable by its header
+function makeSingleDraggable(windowEl, headerEl) {
+  let offsetX = 0, offsetY = 0;
+  headerEl.addEventListener('mousedown', function (e) {
+    windowEl.style.position = 'fixed';
+    offsetX = e.clientX - windowEl.offsetLeft;
+    offsetY = e.clientY - windowEl.offsetTop;
+    zIndexCounter++;
+    windowEl.style.zIndex = zIndexCounter;
+    function mouseMove(e) {
+      const newX = e.clientX - offsetX;
+      const newY = e.clientY - offsetY;
+      windowEl.style.left = `${newX}px`;
+      windowEl.style.top = `${newY}px`;
+    }
+    function mouseUp() {
+      document.removeEventListener('mousemove', mouseMove);
+      document.removeEventListener('mouseup', mouseUp);
+    }
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);
+  });
+}
+
 makeDraggable()
 
 // maxximum windows
@@ -150,18 +174,55 @@ createFolder.addEventListener('click', function (e) {
 })
 
 
-// dubale click to open folder
-
 // double click to open folder (event delegation)
-
 const folderWindow = document.querySelector('.folder-window');
-const folderClose = document.querySelector('.folder-close')
 
-document.querySelectorAll(".folder").forEach(folder => {
-  folder.addEventListener("dblclick", function () {
-      folderWindow.style.display = 'flex';
-  });
+destopScreen.addEventListener("dblclick", function (e) {
+  const folder = e.target.closest('.folder');
+  if (!folder) return;
+  let folderName = folder.querySelector("p").textContent;
+  openFolderWindow(folderName, e.clientX, e.clientY)
 });
 
+function openFolderWindow(folderName, x, y) {
+  let alreadyOpenWindow = document.querySelector(`.folder-window[data-folder-name="${folderName}"]`);
+  if (alreadyOpenWindow) {
+    alreadyOpenWindow.style.zIndex = zIndexCounter++;
+    return;
+  }
 
+  const newFolderWindow = document.createElement('div');
+  newFolderWindow.classList.add("folder-window", "glass");
+  newFolderWindow.setAttribute("data-folder-name", folderName);
+  newFolderWindow.style.top = y + "px";
+  newFolderWindow.style.left = x + "px";
+  newFolderWindow.style.zIndex = zIndexCounter++;
 
+  newFolderWindow.innerHTML = `
+    <div class="folder-header">
+      <div class="folder-title">📁 ${folderName}</div>
+      <button class="folder-close" title="Close">✕</button>
+    </div>
+    <div class="folder-toolbar">
+      <button title="Create New"><span>➕</span> New</button>
+      <button title="View Options"><span>🔍</span> View</button>
+      <button title="Sort By"><span>⇅</span> Sort</button>
+    </div>
+    <div class="folder-content">
+      <div class="empty-state">
+        <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="Empty Folder"/>
+        <p>This folder is empty</p>
+      </div>
+    </div>
+  `;
+
+  // Close button logic
+  newFolderWindow.querySelector(".folder-close").addEventListener("click", () => {
+    newFolderWindow.remove();
+  });
+
+  // Make this folder window draggable by its header
+  makeSingleDraggable(newFolderWindow, newFolderWindow.querySelector('.folder-header'));
+
+  document.body.appendChild(newFolderWindow);
+}

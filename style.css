@@ -210,6 +210,8 @@ body {
 /* folder ui  */
 .folder-window {
   position: absolute;
+    resize: both;
+    overflow: auto;
   width: 520px;
   height: 360px;
   background: rgba(255, 255, 255, 0.2);
@@ -218,7 +220,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  display: none;
+  display: block;
   top: 120px;
   left: 200px;
   z-index: 1000;
