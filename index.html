@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser Base OS</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="main">
+      <div class="screen">
+        <div class="menu-context">
+          <ul>
+            <li class="refresh">Refresh</li>
+            <li class="create-folder">Create Folder</li>
+            <li class="change-wallpaper">Change Wallpaper</li>
+          </ul>
+        </div>
+
+        <div class="folder-window glass">
+          <div class="folder-header">
+            <div class="folder-title">📁 New Folder</div>
+            <button class="folder-close" title="Close">✕</button>
+          </div>
+          <div class="folder-toolbar">
+            <button title="Create New"><span>➕</span> New</button>
+            <button title="View Options"><span>🔍</span> View</button>
+            <button title="Sort By"><span>⇅</span> Sort</button>
+          </div>
+          <div class="folder-content">
+            <div class="empty-state">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/716/716784.png"
+                alt="Empty Folder"
+              />
+              <p>This folder is empty</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="window active" id="file-window">
+          <div class="title-bar" id="file-title-bar">
+            <span class="title">File Explorer</span>
+            <div class="window-controls">
+              <button class="minimize">-</button>
+              <button class="maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+              <button class="close"><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+
+          <div class="window-content">
+            <!-- Files / folders etc. -->
+          </div>
+        </div>
+
+        <div class="window" id="chrome-window">
+          <div class="title-bar" id="file-title-bar">
+            <span class="title">chrome</span>
+            <div class="window-controls">
+              <button class="minimize">-</button>
+              <button class="chrome-maxmize maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+              <button class="close"><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+
+          <div class="window-content">
+            <!-- Files / folders etc. -->
+          </div>
+        </div>
+
+        <div class="window" id="calculator-window">
+          <div class="title-bar" id="file-title-bar">
+            <span class="title">calculator</span>
+            <div class="window-controls">
+              <button class="minimize">-</button>
+              <button class="maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+              <button class="close"><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+
+          <div class="window-content">
+            <!-- Files / folders etc. -->
+          </div>
+        </div>
+
+        <div class="window" id="vs-window">
+          <div class="title-bar" id="file-title-bar">
+            <span class="title">VS code</span>
+            <div class="window-controls">
+              <button class="minimize">-</button>
+              <button class="maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+              <button class="close"><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+
+          <div class="window-content">
+            <!-- Files / folders etc. -->
+          </div>
+        </div>
+
+        <div class="window" id="settings-window">
+          <div class="title-bar" id="file-title-bar">
+            <span class="title">satting</span>
+            <div class="window-controls">
+              <button class="minimize">-</button>
+              <button class="maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+              <button class="close"><i class="ri-close-line"></i></button>
+            </div>
+          </div>
+
+          <div class="window-content">
+            <!-- Files / folders etc. -->
+          </div>
+        </div>
+
+        <div class="taskbar">
+          <div class="window-icon"><i class="ri-windows-fill"></i></div>
+          <div class="apps-icons">
+            <div class="icons">
+              <span
+                ><img class="file-icon" src="./file.png" alt="files"
+              /></span>
+              <span><img class="chrome-icon" src="./chrome.png" alt="" /></span>
+              <span
+                ><img class="calculator-icon" src="./caculater.png" alt=""
+              /></span>
+              <span><img class="vs-icon" src="./vs code.png" alt="" /></span>
+              <span
+                ><img class="settings-icon" src="./setting.png" alt=""
+              /></span>
+            </div>
+          </div>
+          <div class="notification-side"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
