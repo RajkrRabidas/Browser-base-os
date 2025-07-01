@@ -129,14 +129,25 @@ windows.forEach((window) => {
 const contextmenu = document.querySelector('.menu-context')
 
 document.addEventListener('contextmenu', function (e) {
-  e.preventDefault()
-  contextmenu.style.top = e.clientY + 'px'
-  contextmenu.style.left = e.clientX + 'px'
-  contextmenu.style.display = "flex"
-})
+  e.preventDefault();
+  // Check if right-clicked on a folder
+  const folder = e.target.closest('.folder');
+  if (folder) {
+    folderContextMenu.style.top = e.clientY + 'px';
+    folderContextMenu.style.left = e.clientX + 'px';
+    folderContextMenu.style.display = 'block';
+    contextmenu.style.display = 'none';
+  } else {
+    contextmenu.style.top = e.clientY + 'px';
+    contextmenu.style.left = e.clientX + 'px';
+    contextmenu.style.display = 'flex';
+    folderContextMenu.style.display = 'none';
+  }
+});
 
 document.addEventListener('click', function () {
-  contextmenu.style.display = 'none'
+  contextmenu.style.display = 'none';
+  folderContextMenu.style.display = 'none';
 })
 
 // folder appear in destop screen
@@ -144,7 +155,7 @@ document.addEventListener('click', function () {
 const createFolder = document.querySelector('.create-folder')
 const destopScreen = document.querySelector(".screen");
 
-let baseName = "name";
+let baseName = "new folder";
 
 
 createFolder.addEventListener('click', function (e) {
@@ -201,7 +212,13 @@ function openFolderWindow(folderName, x, y) {
   newFolderWindow.innerHTML = `
     <div class="folder-header">
       <div class="folder-title">📁 ${folderName}</div>
-      <button class="folder-close" title="Close">✕</button>
+          <div class="window-controls">
+            <button class="minimize">-</button>
+              <button class="maxmize">
+                <i class="ri-fullscreen-line"></i>
+              </button>
+            <button class="folder-close" title="Close">✕</button>
+          </div>
     </div>
     <div class="folder-toolbar">
       <button title="Create New"><span>➕</span> New</button>
@@ -220,9 +237,161 @@ function openFolderWindow(folderName, x, y) {
   newFolderWindow.querySelector(".folder-close").addEventListener("click", () => {
     newFolderWindow.remove();
   });
+  // folder maximaize
+  newFolderWindow.querySelector(".maxmize").addEventListener("click", () => {
+    const folderWindow = document.querySelector(".folder-window")
 
+    if (!folderWindow.classList.contains("active")) {
+      folderWindow.style.width = "100%";
+      folderWindow.style.height = "100%";
+      folderWindow.style.top = "0";
+      folderWindow.style.left = "0";
+      folderWindow.style.zIndex = "100";
+      folderWindow.classList.add("active");
+    } else {
+      folderWindow.style.width = "520px";
+      folderWindow.style.height = "360px";
+      folderWindow.style.top = y + "px";
+      folderWindow.style.left = x + "px";
+      folderWindow.classList.remove("active");
+    }
+  });
   // Make this folder window draggable by its header
   makeSingleDraggable(newFolderWindow, newFolderWindow.querySelector('.folder-header'));
 
   document.body.appendChild(newFolderWindow);
 }
+
+
+// folder right click to open context Menu
+
+const folderContextMenu = document.querySelector("#folderContextMenu")
+
+folderContextMenu.addEventListener("contextmenu", function (e) {
+  e.preventDefault()
+  folderContextMenu.style.top = e.clientY + 'px'
+  folderContextMenu.style.left = e.clientX + 'px'
+  folderContextMenu.style.display = "block"
+  contextmenu.style.display = 'none'
+})
+
+let selectedFolder = null;
+
+// Update contextmenu event to track selectedFolder
+// (replace all uses of folderToDelete with selectedFolder)
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+  const folder = e.target.closest('.folder');
+  if (folder) {
+    selectedFolder = folder;
+    folderContextMenu.style.top = e.clientY + 'px';
+    folderContextMenu.style.left = e.clientX + 'px';
+    folderContextMenu.style.display = 'block';
+    contextmenu.style.display = 'none';
+  } else {
+    selectedFolder = null;
+    contextmenu.style.top = e.clientY + 'px';
+    contextmenu.style.left = e.clientX + 'px';
+    contextmenu.style.display = 'flex';
+    folderContextMenu.style.display = 'none';
+  }
+});
+
+// delete folder
+document.querySelector(".delete-option").addEventListener("click", function () {
+  if (selectedFolder) {
+    if (confirm("Are you sure you want to delete this folder?")) {
+      selectedFolder.remove();
+      selectedFolder = null;
+    }
+  }
+  folderContextMenu.style.display = 'none';
+});
+
+// rename folder
+
+document.querySelector(".rename-option").addEventListener('click', function () {
+  if (!selectedFolder) return;
+  const nameElement = selectedFolder.querySelector('p');
+  const oldName = nameElement.textContent;
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldName;
+  input.className = "rename-input";
+  nameElement.replaceWith(input);
+  input.focus();
+  input.select();
+
+  function finishRename() {
+    const newName = input.value.trim() || oldName;
+    const newP = document.createElement('p');
+    newP.textContent = newName;
+    input.replaceWith(newP);
+    if (newName !== oldName) {
+      showToast("Folder renamed!", "success");
+    } else {
+      showToast("Rename cancelled.", "warning");
+    }
+  }
+  input.addEventListener('blur', finishRename);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      input.blur();
+    }
+  });
+  folderContextMenu.style.display = 'none';
+});
+
+// Toast notification function
+function showToast(message, type = "info") {
+  let toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 2000);
+}
+
+// Toast CSS (inject if not present)
+if (!document.getElementById('toast-style')) {
+  const style = document.createElement('style');
+  style.id = 'toast-style';
+  style.textContent = `
+    .toast {
+      position: fixed;
+      top: 5%;
+      right: 5%;
+      left: auto;
+      transform: none;
+      background: #333;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, top 0.3s;
+      z-index: 9999;
+      font-size: 1rem;
+    }
+    .toast.show {
+      opacity: 1;
+      top: 7%;
+      pointer-events: auto;
+    }
+    .toast-success { background: #4caf50; }
+    .toast-warning { background: #ff9800; }
+    .toast-info { background: #2196f3; }
+    .toast-error { background: #f44336; }
+  `;
+  document.head.appendChild(style);
+}
+
+
+
+
+
