@@ -6,18 +6,22 @@ const calculatorWindow = document.querySelector('#calculator-window');
 const calculatorIcon = document.querySelector('.calculator-icon');
 const vsCodeIcon = document.querySelector('.vs-icon');
 const vsCodeWindow = document.querySelector('#vs-window');
-const settingsIcon = document.querySelector('.settings-icon');
-const settingsWindow = document.querySelector('#settings-window');
+const notepadIcon = document.querySelector('.notepad-icon');
+const notepadWindow = document.querySelector('#notepad-window');
 
 const windows = document.querySelectorAll('.window');
 const titleBar = document.querySelectorAll('.title-bar')
 
 fileIcon.addEventListener('click', function () {
   fileWindow.style.display = 'flex';
+  fileWindow.style.top = "160px"
+  fileWindow.style.left = "200px"
 })
 
 chromeIcon.addEventListener("click", function () {
-  chromeWindow.style.display = "flex"
+  chromeWindow.style.display = "flex";
+  chromeWindow.style.top = "140px"
+  chromeWindow.style.left = "220px"
 })
 
 calculatorIcon.addEventListener("click", function () {
@@ -27,8 +31,10 @@ calculatorIcon.addEventListener("click", function () {
 vsCodeIcon.addEventListener("click", function () {
   vsCodeWindow.style.display = "flex";
 })
-settingsIcon.addEventListener("click", function () {
-  settingsWindow.style.display = "flex";
+notepadIcon.addEventListener("click", function () {
+  notepadWindow.style.display = "flex";
+  notepadWindow.style.top = "120px"
+  notepadWindow.style.left = "260px"
 })
 
 let startX = 0, startY = 0, offsetX = 0, offsetY = 0
@@ -96,7 +102,7 @@ makeDraggable()
 windows.forEach((window) => {
   const maximizeBtn = window.querySelector('.maxmize');
   if (maximizeBtn) {
-    maximizeBtn.addEventListener('click', function () {
+    maximizeBtn.addEventListener('click', function (e) {
       if (!window.classList.contains("active")) {
         window.style.width = "100%";
         window.style.height = "100%";
@@ -107,8 +113,6 @@ windows.forEach((window) => {
       } else {
         window.style.width = "50vw";
         window.style.height = "60vh";
-        window.style.top = "180px";
-        window.style.left = "170px";
         window.classList.remove("active");
       }
     });
@@ -334,7 +338,7 @@ document.querySelector(".rename-option").addEventListener('click', function () {
     }
   }
   input.addEventListener('blur', finishRename);
-  input.addEventListener('keydown', function(e) {
+  input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
       input.blur();
     }
@@ -393,5 +397,15 @@ if (!document.getElementById('toast-style')) {
 
 
 
+const notepadTextarea = document.querySelector(".notepad-textarea")
+let timer;
 
+notepadTextarea.addEventListener("input", function (e) {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    localStorage.setItem("notepad-text", notepadTextarea.value);
+  }, 2000);
+})
 
+const savedText = localStorage.getItem("notepad-text");
+if (savedText) notepadTextarea.value = savedText;

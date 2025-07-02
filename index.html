@@ -21,8 +21,6 @@
           </ul>
         </div>
 
-        
-
         <ul id="folderContextMenu" class="context-menu hidden">
           <li class="delete-option">Delete</li>
           <li class="cut-option">cut</li>
@@ -99,9 +97,9 @@
           </div>
         </div>
 
-        <div class="window" id="settings-window">
+        <div class="window" id="notepad-window">
           <div class="title-bar" id="file-title-bar">
-            <span class="title">satting</span>
+            <span class="title">📝 Notepad</span>
             <div class="window-controls">
               <button class="minimize">-</button>
               <button class="maxmize">
@@ -112,7 +110,19 @@
           </div>
 
           <div class="window-content">
-            <!-- Files / folders etc. -->
+            <div class="notepad-toolbar">
+              <button title="Save">💾 Save</button>
+              <button title="Word Count">🔢 Count</button>
+            </div>
+
+            <textarea
+              class="notepad-textarea"
+              placeholder="Start typing..."
+            ></textarea>
+
+            <div class="notepad-statusbar">
+              <span>Words: 0</span>
+            </div>
           </div>
         </div>
 
@@ -129,7 +139,7 @@
               /></span>
               <span><img class="vs-icon" src="./vs code.png" alt="" /></span>
               <span
-                ><img class="settings-icon" src="./setting.png" alt=""
+                ><img class="notepad-icon" src="./notepad.png" alt=""
               /></span>
             </div>
           </div>
