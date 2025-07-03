@@ -101,6 +101,7 @@ body {
     color: #fff;
     font-family: 'Segoe UI', sans-serif;
     display: none;
+    flex-direction: column;
 }
 
   #main .screen #file-window .title-bar {
