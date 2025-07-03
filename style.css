@@ -21,28 +21,60 @@ body {
 #main .screen {
   width: 100%;
   height: 100%;
-  background-image: url("https://images.unsplash.com/photo-1640906152676-dace6710d24b?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-image: url('https://images.unsplash.com/photo-1637937267030-6d571ad57f3f?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  padding: 1rem;
+    transition: background-image 0.4s ease-in-out;
 }
+#main .screen .desktop-icon{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#main .screen .desktop-icon li{
+  list-style: none;
+  width: 2.5rem;
+}
+#main .screen .desktop-icon li img{
+  width: 100%;
+  height: 100%;
+}
+
 .menu-context {
-  position: fixed;
-  z-index: 9999;
-  display: none;
-  width: fit-content;
-  background-color: rgb(3, 23, 37);
-  color: #ccc;
+  position: absolute;
+  background: rgba(33, 33, 33, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 999;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  display: none; /* Initially hidden */
 }
 
 .menu-context ul {
-  padding: 0.3rem 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.menu-context ul li {
-  padding: 3px 0;
+.menu-context li {
+  padding: 10px 16px;
   cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-context li:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .folder {
@@ -60,35 +92,131 @@ body {
 }
 
 #main .screen #file-window {
-  display: none;
-  width: 50vw;
-  height: 60vh;
-  background-color: #1b1b1b;
-  position: fixed;
-  z-index: 10;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(30, 30, 40, 0.9);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    display: none;
 }
 
-#main .screen #file-window .title-bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 9px 10px;
-  background-color: #ededed87;
-}
-#main .screen #file-window .title-bar .window-controls button {
-  background: transparent;
-  color: #000;
-  font-size: 15px;
-  outline: none;
-  border: none;
-  padding: 0 10px;
-}
+  #main .screen #file-window .title-bar {
+    background: rgba(60, 60, 70, 0.9);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: grab;
+  }
 
-#main .screen #file-window .title-bar.pressed {
-  background-color: #d1d1d1 !important;
+    #main .screen #file-window .title-bar .window-controls button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 8px;
+    border-radius: 6px;
+    padding: 4px;
+    transition: background 0.2s ease;
+  }
+
+    #main .screen #file-window .title-bar .window-controls button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .header {
+    display: flex;
+    gap: 16px;
+    padding: 12px 20px;
+    background: rgba(50, 55, 65, 0.9);
+    list-style: none;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .header li {
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+
+  .header li.active,
+  .header li:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .window-content {
+    display: block;
+  }
+
+  .sidebar {
+    width: 180px;
+    background: rgba(40, 40, 50, 0.95);
+    padding: 16px;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .sidebar-item {
+    margin-bottom: 12px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .sidebar-item.active,
+  .sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .content-area {
+    flex: 1;
+    padding: 24px;
+  }
+
+  .drives {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .drive-card {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .drive-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .bar {
+    background: rgba(255,255,255,0.08);
+    height: 6px;
+    border-radius: 4px;
+    margin: 8px 0;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    background: #4f9eff;
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+.thispc-active{
+  display: block;
 }
 
 #main .screen .taskbar {
@@ -101,7 +229,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 5px 0;
 }
 
 #main .screen .taskbar .window-icon {
@@ -151,6 +279,7 @@ body {
   justify-content: space-between;
   padding: 9px 10px;
   background-color: #ededed87;
+  cursor: grab;
 }
 
 #main .screen #chrome-window .title-bar .window-controls button {
@@ -162,34 +291,150 @@ body {
   padding: 0 10px;
 }
 
+
+#main .screen #chrome-window .window-content{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#main .screen #chrome-window .window-content .input-box{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#main .screen #chrome-window .window-content input{
+  width: 90%;
+  height: 2rem;
+  outline: none;
+  /* border: none; */
+}
+
+#main .screen #chrome-window .window-content button{
+  padding: 8px 20px;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 151, 201, 0.815);
+  color: #fff;
+  border-radius: 6px;
+}
+
+
+#main .screen #chrome-window .window-content button:active{
+  scale: 0.96;
+}
+
+#main .screen #chrome-window .window-content iframe{
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+.sites-load{
+  width: 100%;
+  height: 100%;
+}
+
+
+
 #main .screen #calculator-window {
   display: none;
-  width: 50vw;
-  height: 60vh;
-  top: 180px;
-  left: 170px;
-  background-color: #1b1b1b;
+  top: 80px;
+  left: 390px;
   position: fixed;
   z-index: 10;
-  background-color: white;
-  border: 1px solid #ccc;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   flex-direction: column;
 }
 #main .screen #calculator-window .title-bar {
   display: flex;
   justify-content: space-between;
-  padding: 9px 10px;
-  background-color: #ededed87;
+  padding: 10px 0;
+    cursor: grab;
+    color: #fff;
 }
 #main .screen #calculator-window .title-bar .window-controls button {
   background: transparent;
-  color: #000;
+  color: #fff;
   font-size: 15px;
   outline: none;
   border: none;
   padding: 0 10px;
 }
+
+.calculator-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: rgba(40, 40, 40, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  width: 300px;
+  height: 420px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      padding-top: 0;
+}
+
+.calculator-display {
+  margin-bottom: 20px;
+}
+
+#calc-display {
+  width: 100%;
+  height: 60px;
+  font-size: 28px;
+  text-align: right;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  background: #1e1e1e;
+  color: #ffffff;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.calc-btn {
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #2d2d2d;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.calc-btn:hover {
+  background: #3e3e3e;
+  transform: scale(1.05);
+}
+
+.equal-btn {
+  background: #0078d7;
+  color: #fff;
+  font-weight: bold;
+}
+.AC{
+  background-color: #FFA212;
+}
+.AC:hover{
+  background-color: #ffa012c0;
+}
+.equal-btn:hover {
+  background: #005fa3;
+}
+
+
+
 
 #main .screen #vs-window {
   display: none;
@@ -211,6 +456,7 @@ body {
   justify-content: space-between;
   padding: 9px 10px;
   background-color: #ededed87;
+    cursor: grab;
 }
 #main .screen #vs-window .title-bar .window-controls button {
   background: transparent;
@@ -240,6 +486,7 @@ body {
   justify-content: space-between;
   padding: 9px 10px;
   background-color: #ededed87;
+    cursor: grab;
 }
 #main .screen #notepad-window .title-bar .window-controls button {
   background: transparent;

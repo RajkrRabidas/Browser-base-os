@@ -13,7 +13,7 @@ const windows = document.querySelectorAll('.window');
 const titleBar = document.querySelectorAll('.title-bar')
 
 fileIcon.addEventListener('click', function () {
-  fileWindow.style.display = 'flex';
+  fileWindow.style.display = 'block';
   fileWindow.style.top = "160px"
   fileWindow.style.left = "200px"
 })
@@ -178,7 +178,7 @@ createFolder.addEventListener('click', function (e) {
     newName = `${baseName} (${counter})`;
     counter++;
   }
-  newFolder.innerHTML = `<img src="./folder.png" alt="">
+  newFolder.innerHTML = `<img src="./images/folder.png" alt="">
           <p>${newName}</p>`
   newFolder.style.position = 'absolute'
   newFolder.style.top = e.clientY + 'px'
@@ -409,3 +409,96 @@ notepadTextarea.addEventListener("input", function (e) {
 
 const savedText = localStorage.getItem("notepad-text");
 if (savedText) notepadTextarea.value = savedText;
+
+
+
+
+
+// chrome browser intrigration
+
+const chromeInput = document.querySelector("#chrome-input")
+const chromeIframe = document.querySelector('#chrome-iframe')
+const chromeSearchBtn = document.querySelector("#chrome-search")
+
+chromeSearchBtn.addEventListener("click", function () {
+  let url = chromeInput.value.trim()
+  let searchURL = `https://www.bing.com/search?q=${url}`
+
+
+  chromeIframe.src = searchURL;
+})
+
+chromeInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    chromeSearchBtn.click(); // 👈 Reuse the click logic
+  }
+});
+
+const thisPc = document.querySelector(".this-pc")
+
+thisPc.addEventListener("click", function () {
+  fileWindow.style.display = 'flex';
+  fileWindow.style.top = "160px"
+  fileWindow.style.left = "200px"
+})
+
+
+// calculator
+
+const InputBox = document.querySelector('#calc-display')
+const buttons = document.querySelectorAll(".calc-btn")
+
+let string = '';
+
+Array.from(buttons).forEach((button) => {
+  button.addEventListener("click", function (e) {
+    if (e.target.innerHTML == '=') {
+      string = eval(string)
+      document.querySelector('#calc-display').value = string
+
+    } else if (e.target.innerHTML == 'C') {
+      string = string.slice(0, -1)
+      document.querySelector('#calc-display').value = string
+    }else if (e.target.innerHTML == 'AC') {
+      string = ""
+      document.querySelector('#calc-display').value = string
+    } 
+     else {
+      string = string + e.target.innerHTML
+      document.querySelector('#calc-display').value = string
+    }
+  })
+})
+
+const changeWallpaper = document.querySelector('.change-wallpaper')
+let currentWallpaperIndex = 0;
+
+
+const wallpapers = [
+  "https://images.unsplash.com/photo-1637937267030-6d571ad57f3f?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1654649451086-dd75d8170a27?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1689852500881-e80588efaed6?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1672044588587-f9f566bc7a77?q=80&w=1460&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1671401275024-7c6f18577d08?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1630926906914-f98970d8894c?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+];
+
+
+// 🔁 Load saved wallpaper index (if exists)
+const savedIndex = localStorage.getItem("currentWallpaperIndex");
+currentWallpaperIndex = savedIndex ? parseInt(savedIndex) : 0;
+
+destopScreen.style.backgroundImage = `url('${wallpapers[currentWallpaperIndex]}')`;
+destopScreen.style.backgroundSize = 'cover';
+destopScreen.style.backgroundPosition = 'center';
+
+changeWallpaper.addEventListener('click', function () {
+  currentWallpaperIndex = (currentWallpaperIndex + 1) % wallpapers.length;
+  const selectedImage = wallpapers[currentWallpaperIndex];
+
+  destopScreen.style.backgroundImage = `url('${selectedImage}')`;
+  destopScreen.style.backgroundSize = 'cover';
+  destopScreen.style.backgroundPosition = 'center';
+
+  localStorage.setItem("currentWallpaperIndex", currentWallpaperIndex);
+});

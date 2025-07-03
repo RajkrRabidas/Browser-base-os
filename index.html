@@ -9,24 +9,30 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    
   </head>
   <body>
     <div id="main">
       <div class="screen">
+        <div class="desktop-icon">
+          <li><img class="this-pc" src="./images/this-pc.png" alt="" /></li>
+          <li><img src="./images/terminal.ico" alt="" /></li>
+          <li><img src="./images/gallery.png" alt="" /></li>
+        </div>
         <div class="menu-context">
           <ul>
-            <li class="refresh">Refresh</li>
-            <li class="create-folder">Create Folder</li>
-            <li class="change-wallpaper">Change Wallpaper</li>
+            <li class="refresh"><i class="ri-refresh-line"></i> Refresh</li>
+            <li class="create-folder"><i class="ri-add-box-line"></i> Create Folder</li>
+            <li class="change-wallpaper"><i class="ri-brush-ai-line"></i> Change Wallpaper</li>
           </ul>
         </div>
 
         <ul id="folderContextMenu" class="context-menu hidden">
-          <li class="delete-option">Delete</li>
-          <li class="cut-option">cut</li>
-          <li class="properties-option">paste</li>
-          <li class="properties-option">copy</li>
-          <li class="rename-option">Rename</li>
+          <li class="delete-option"><i class="ri-delete-bin-7-line"></i>  Delete</li>
+          <li class="cut-option"><i class="ri-scissors-cut-line"></i> cut</li>
+          <li class="properties-option"><i class="ri-clipboard-line"></i> paste</li>
+          <li class="properties-option"><i class="ri-file-copy-line"></i> copy</li>
+          <li class="rename-option"><i class="ri-pencil-fill"></i> Rename</li>
         </ul>
 
         <div class="window active" id="file-window">
@@ -40,9 +46,47 @@
               <button class="close"><i class="ri-close-line"></i></button>
             </div>
           </div>
-
+          <div class="header">
+            <li>file</li>
+            <li>Home</li>
+            <li>view</li>
+          </div>
           <div class="window-content">
-            <!-- Files / folders etc. -->
+            <!-- <div class="explorer-window"> -->
+            <div class="sidebar">
+              <div class="sidebar-item">📁 OneDrive - Personal</div>
+              <div class="sidebar-item active">💻 This PC</div>
+              <div class="sidebar-item">🌐 Network</div>
+            </div>
+
+            <div class="content-area">
+              <h3>Devices and drives (2)</h3>
+
+              <div class="drives">
+                <div class="drive-card">
+                  <div class="drive-icon">🖥️</div>
+                  <div class="drive-info">
+                    <p><strong>Local Disk (C:)</strong></p>
+                    <div class="bar">
+                      <div class="bar-fill" style="width: 62%"></div>
+                    </div>
+                    <p>54.9 GB free of 145 GB</p>
+                  </div>
+                </div>
+
+                <div class="drive-card">
+                  <div class="drive-icon">💾</div>
+                  <div class="drive-info">
+                    <p><strong>Local Disk (D:)</strong></p>
+                    <div class="bar">
+                      <div class="bar-fill" style="width: 80%"></div>
+                    </div>
+                    <p>73.1 GB free of 91.9 GB</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
           </div>
         </div>
 
@@ -59,24 +103,56 @@
           </div>
 
           <div class="window-content">
-            <!-- Files / folders etc. -->
+            <div class="input-box">
+              <input
+                id="chrome-input"
+                placeholder="Search or enter web address"
+              />
+              <button id="chrome-search">Search</button>
+            </div>
+            <div class="sites-load">
+              <iframe id="chrome-iframe" src=""></iframe>
+            </div>
           </div>
         </div>
 
         <div class="window" id="calculator-window">
-          <div class="title-bar" id="file-title-bar">
-            <span class="title">calculator</span>
-            <div class="window-controls">
-              <button class="minimize">-</button>
-              <button class="maxmize">
-                <i class="ri-fullscreen-line"></i>
-              </button>
-              <button class="close"><i class="ri-close-line"></i></button>
+          <div class="window-content calculator-content">
+            <div class="title-bar" id="file-title-bar">
+              <span class="title">calculator</span>
+              <div class="window-controls">
+                <button class="close"><i class="ri-close-line"></i></button>
+              </div>
             </div>
-          </div>
+            <div class="calculator-display">
+              <input type="text" id="calc-display" value="0" readonly />
+            </div>
+            <div class="calculator-buttons">
+              <button class="calc-btn AC" data-value="AC">AC</button>
+              <button class="calc-btn" data-value="C">C</button>
+              <button class="calc-btn" data-value="%">%</button>
+              <button class="calc-btn" data-value="/">/</button>
 
-          <div class="window-content">
-            <!-- Files / folders etc. -->
+              <button class="calc-btn" data-value="7">7</button>
+              <button class="calc-btn" data-value="8">8</button>
+              <button class="calc-btn" data-value="9">9</button>
+              <button class="calc-btn" data-value="*">*</button>
+
+              <button class="calc-btn" data-value="4">4</button>
+              <button class="calc-btn" data-value="5">5</button>
+              <button class="calc-btn" data-value="6">6</button>
+              <button class="calc-btn" data-value="-">-</button>
+
+              <button class="calc-btn" data-value="1">1</button>
+              <button class="calc-btn" data-value="2">2</button>
+              <button class="calc-btn" data-value="3">3</button>
+              <button class="calc-btn" data-value="+">+</button>
+
+              <button class="calc-btn" data-value="00">00</button>
+              <button class="calc-btn" data-value="0">0</button>
+              <button class="calc-btn" data-value=".">.</button>
+              <button class="calc-btn equal-btn" data-value="=">=</button>
+            </div>
           </div>
         </div>
 
@@ -131,15 +207,15 @@
           <div class="apps-icons">
             <div class="icons">
               <span
-                ><img class="file-icon" src="./file.png" alt="files"
+                ><img class="file-icon" src="./images/file-Explore.png" alt="files"
               /></span>
-              <span><img class="chrome-icon" src="./chrome.png" alt="" /></span>
+              <span><img class="chrome-icon" src="./images/chrome.png" alt="" /></span>
               <span
-                ><img class="calculator-icon" src="./caculater.png" alt=""
+                ><img class="calculator-icon" src="./images/caculater.png" alt=""
               /></span>
-              <span><img class="vs-icon" src="./vs code.png" alt="" /></span>
+              <span><img class="vs-icon" src="./images/vs code.png" alt="" /></span>
               <span
-                ><img class="notepad-icon" src="./notepad.png" alt=""
+                ><img class="notepad-icon" src="images/notepad.png" alt=""
               /></span>
             </div>
           </div>
