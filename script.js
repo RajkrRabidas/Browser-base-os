@@ -13,7 +13,7 @@ const windows = document.querySelectorAll('.window');
 const titleBar = document.querySelectorAll('.title-bar')
 
 fileIcon.addEventListener('click', function () {
-  fileWindow.style.display = 'block';
+  fileWindow.style.display = 'flex';
   fileWindow.style.top = "160px"
   fileWindow.style.left = "200px"
 })
@@ -459,11 +459,11 @@ Array.from(buttons).forEach((button) => {
     } else if (e.target.innerHTML == 'C') {
       string = string.slice(0, -1)
       document.querySelector('#calc-display').value = string
-    }else if (e.target.innerHTML == 'AC') {
+    } else if (e.target.innerHTML == 'AC') {
       string = ""
       document.querySelector('#calc-display').value = string
-    } 
-     else {
+    }
+    else {
       string = string + e.target.innerHTML
       document.querySelector('#calc-display').value = string
     }
@@ -484,7 +484,7 @@ const wallpapers = [
 ];
 
 
-// 🔁 Load saved wallpaper index (if exists)
+// Load saved wallpaper index (if exists)
 const savedIndex = localStorage.getItem("currentWallpaperIndex");
 currentWallpaperIndex = savedIndex ? parseInt(savedIndex) : 0;
 
@@ -501,4 +501,121 @@ changeWallpaper.addEventListener('click', function () {
   destopScreen.style.backgroundPosition = 'center';
 
   localStorage.setItem("currentWallpaperIndex", currentWallpaperIndex);
+});
+
+// timmer
+
+function updateTime() {
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const second = now.getSeconds().toString().padStart(2, "0");
+  let period = "AM";
+
+  if (hours > 12) {
+    period = "PM"
+  }
+  hours == hours > 12 ? hours - 12 : hours;
+
+  document.querySelector(".time").innerHTML = `${hours}: ${minutes}`
+
+}
+
+const today = new Date();
+const monthName = today.toLocaleString("default", { month: "short" })
+const dayName = today.toLocaleString("default", { weekday: "long" })
+const dayNumber = today.getDate()
+const year = today.getFullYear()
+
+document.querySelector(".date").innerHTML = `0${dayNumber}-${monthName}-${year}`
+
+
+setInterval(updateTime, 1000);
+
+
+
+// brightness on screen
+
+const sliderBox = document.querySelector(".slider-box input")
+const slider = document.querySelector(".slider-box")
+const brightnessIcon = document.querySelector(".notification-side .sun")
+
+
+brightnessIcon.addEventListener("click", function () {
+  if (slider.style.display === 'flex') {
+    slider.style.display = 'none'
+  } else {
+    slider.style.display = 'flex'
+  }
+})
+
+sliderBox.addEventListener('mousemove', function () {
+  destopScreen.style.filter = "brightness(" + sliderBox.value + "%)"
+})
+
+// weather functionality
+const weatherIcon = document.querySelector('.weather-icon-1')
+const weatherCard = document.querySelector(".card")
+
+weatherIcon.addEventListener('click', function (e) {
+  e.stopPropagation();
+  weatherCard.style.display = 'block'
+})
+
+
+
+const apiBase = "https://api.openweathermap.org/data/2.5/weather";
+const apiKey = "eb59def2f536b4a6c0d85bfe163b1b2a";
+const searchBox = document.querySelector(".search input");
+const searchBtn = document.querySelector(".search button");
+
+destopScreen.addEventListener('click', function(){
+    weatherCard.style.display = 'none'
+})
+
+weatherCard.addEventListener("click", function (e) {
+  e.stopPropagation();  // Prevent desktop click from firing
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedWeather = localStorage.getItem("weather");
+  if (savedWeather) {
+    const data = JSON.parse(savedWeather);
+
+    // UI update on page load
+    document.querySelector('.city-name').innerHTML = data.name;
+    document.querySelector('.temp').innerHTML = Math.floor(data.main.temp) + "°C";
+    document.querySelector('.humidity').innerHTML = data.main.humidity + "%";
+    document.querySelector('.wind').innerHTML = Math.floor(data.wind.speed) + " km/h";
+
+    // Optionally auto-fill the input box too
+    document.querySelector(".search input").value = data.name;
+  }
+});
+
+
+async function weatherUpdate(city) {
+  if (!city) return;
+  const url = `${apiBase}?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+  const res = await fetch(url);
+  let data = await res.json();
+
+  if (data.cod !== 200) {
+    document.querySelector('.city-name').innerHTML = "City not found";
+    document.querySelector('.temp').innerHTML = "-";
+    document.querySelector('.humidity').innerHTML = "-";
+    document.querySelector('.wind').innerHTML = "-";
+    return;
+  }
+
+  document.querySelector('.city-name').innerHTML = data.name;
+  document.querySelector('.temp').innerHTML = Math.floor(data.main.temp) + "°C";
+  document.querySelector('.humidity').innerHTML = data.main.humidity + "%";
+  document.querySelector('.wind').innerHTML = Math.floor(data.wind.speed) + " km/h";
+
+  localStorage.setItem("weather", JSON.stringify(data));
+}
+
+searchBtn.addEventListener('click', function () {
+  weatherUpdate(searchBox.value);
 });

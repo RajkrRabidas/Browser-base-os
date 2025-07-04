@@ -14,6 +14,11 @@
   <body>
     <div id="main">
       <div class="screen">
+
+        <div class="weather-icon-1">
+          <img src="./images/cloudy.png" alt="">
+        </div>
+
         <div class="desktop-icon">
           <li><img class="this-pc" src="./images/this-pc.png" alt="" /></li>
           <li><img src="./images/terminal.ico" alt="" /></li>
@@ -25,6 +30,36 @@
             <li class="create-folder"><i class="ri-add-box-line"></i> Create Folder</li>
             <li class="change-wallpaper"><i class="ri-brush-ai-line"></i> Change Wallpaper</li>
           </ul>
+        </div>
+
+        <div class="card">
+          <div class="search">
+            <input type="text" placeholder="Enter city Name" spellcheck="false">
+            <button><i class="ri-search-line"></i></button>
+              </div>
+            <div class="weather">
+              <img class="weather-icon" src="./images/rain.png" alt="">
+              <h1 class="temp">22°C</h1>
+              <h2 class="city-name">New York</h2>
+
+              <div class="details">
+                <div class="col">
+                  <img src="images/humidity.png" alt="">
+                  <div>
+                    <p class="humidity">50%</p>
+                    <p>Humidity</p>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <img src="images/wind.png" alt="">
+                  <div>
+                    <p class="wind">15km/h</p>
+                    <p>wing speed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
 
         <ul id="folderContextMenu" class="context-menu hidden">
@@ -202,10 +237,17 @@
           </div>
         </div>
 
+        <div class="slider-box">
+          <input type="range" min="0" max="150" value="100">
+        </div>
+
         <div class="taskbar">
           <div class="window-icon"><i class="ri-windows-fill"></i></div>
           <div class="apps-icons">
             <div class="icons">
+              <span
+                ><img class="notepad-icon" src="images/notepad.png" alt=""
+              /></span>
               <span
                 ><img class="file-icon" src="./images/file-Explore.png" alt="files"
               /></span>
@@ -214,12 +256,23 @@
                 ><img class="calculator-icon" src="./images/caculater.png" alt=""
               /></span>
               <span><img class="vs-icon" src="./images/vs code.png" alt="" /></span>
-              <span
-                ><img class="notepad-icon" src="images/notepad.png" alt=""
-              /></span>
             </div>
           </div>
-          <div class="notification-side"></div>
+          <div class="notification-side">
+            <span class="sun">
+              <i class="ri-sun-fill"></i>
+            </span>
+            <span>
+              <i class="ri-wifi-line"></i>
+            </span>
+            <span>
+              <i class="ri-volume-up-line"></i>
+            </span>
+            <span class="timer">
+              <p class="time"></p>
+              <p class="date"></p>
+            </span>
+          </div>
         </div>
       </div>
     </div>
